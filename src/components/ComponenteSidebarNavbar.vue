@@ -86,6 +86,21 @@ export default {
   created() {
     // Simulação de carregamento de role, substitua com chamada real
     this.role = localStorage.getItem('role') || ROLES.USER; // Por exemplo, "NOA"
+    // Definir o título ao carregar a página com base no componente inicial
+    this.updateTitle();
+  },
+  mounted() {
+    // Defina o título quando o componente for montado
+    this.updateTitle();
+  },
+  watch: {
+    // Atualiza o título quando o componente selecionado mudar
+    selectedComponent(newComponent) {
+      this.updateTitle();
+    },
+    role(newRole) {
+      this.updateTitle();
+    }
   },
   methods: {
     setComponent(componentName) {
@@ -110,13 +125,19 @@ export default {
       localStorage.removeItem('authToken'); // Remove o token do localStorage
       this.$router.push('/'); // Redireciona para a página de login
     },
-  },
-  watch: {
-    role(newRole) {
-    },
+    updateTitle() {
+      if (this.selectedComponent === 'ComponenteHome') {
+        document.title = " ST-Soluções";
+      } else if (this.selectedComponent === 'ComponenteKaban') {
+        document.title = "Kanban - ST-Soluções";
+      } else {
+        document.title = "ST-Soluções";
+      }
+    }
   },
 };
 </script>
+
 
 
 
